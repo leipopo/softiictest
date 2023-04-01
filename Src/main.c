@@ -93,7 +93,7 @@ int main(void)
   while (1)
   {
     sw_i2c_start();
-    HAL_Delay(100);
+    //HAL_Delay(100);
     /* USER CODE END WHILE */
     
     /* USER CODE BEGIN 3 */
