@@ -93,9 +93,13 @@ int main(void)
   while (1)
   {
     sw_i2c_start();
-    //HAL_Delay(100);
+    //if(HAL_GPIO_ReadPin(GPIOF,GPIO_PIN_0)==SET)
+		//HAL_Delay(100);
+		
+//		int t0 = READ_SDA;
+//		int t1 = READ_SCL;
     /* USER CODE END WHILE */
-    
+
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */

@@ -1,0 +1,27 @@
+--cpu=Cortex-M4.fp.sp
+"softiictest\startup_stm32f407xx.o"
+"softiictest\main.o"
+"softiictest\gpio.o"
+"softiictest\stm32f4xx_it.o"
+"softiictest\stm32f4xx_hal_msp.o"
+"softiictest\softiic.o"
+"softiictest\stm32f4xx_hal_tim.o"
+"softiictest\stm32f4xx_hal_tim_ex.o"
+"softiictest\stm32f4xx_hal_rcc.o"
+"softiictest\stm32f4xx_hal_rcc_ex.o"
+"softiictest\stm32f4xx_hal_flash.o"
+"softiictest\stm32f4xx_hal_flash_ex.o"
+"softiictest\stm32f4xx_hal_flash_ramfunc.o"
+"softiictest\stm32f4xx_hal_gpio.o"
+"softiictest\stm32f4xx_hal_dma_ex.o"
+"softiictest\stm32f4xx_hal_dma.o"
+"softiictest\stm32f4xx_hal_pwr.o"
+"softiictest\stm32f4xx_hal_pwr_ex.o"
+"softiictest\stm32f4xx_hal_cortex.o"
+"softiictest\stm32f4xx_hal.o"
+"softiictest\stm32f4xx_hal_exti.o"
+"softiictest\system_stm32f4xx.o"
+--strict --scatter "softiictest\softiictest.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "softiictest.map" -o softiictest\softiictest.axf

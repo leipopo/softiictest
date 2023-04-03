@@ -1,5 +1,36 @@
 #include "main.h"
 
+void iicioinit()
+{
+    GPIO_InitTypeDef GPIO_InitStruct = {0};
+    /* GPIO Ports Clock Enable */
+    __HAL_RCC_GPIOI_CLK_ENABLE();
+
+    /*Configure GPIO pins : PI7 PI6 */
+    GPIO_InitStruct.Pin  = GPIO_PIN_0 | GPIO_PIN_1;
+    GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+    GPIO_InitStruct.Pull = GPIO_NOPULL;
+    HAL_GPIO_Init(GPIOF, &GPIO_InitStruct);
+}
+
+void SDA_READ2SET()
+{
+    GPIO_InitTypeDef GPIO_InitStruct = {0};
+    GPIO_InitStruct.Pin              = GPIO_PIN_0;
+    GPIO_InitStruct.Mode             = GPIO_MODE_OUTPUT_PP;
+    GPIO_InitStruct.Pull             = GPIO_NOPULL;
+    HAL_GPIO_Init(SDA_IOGroup, &GPIO_InitStruct);
+}
+
+void SDA_SET2READ()
+{
+    GPIO_InitTypeDef GPIO_InitStruct = {0};
+    GPIO_InitStruct.Pin              = GPIO_PIN_0;
+    GPIO_InitStruct.Mode             = GPIO_MODE_INPUT;
+    GPIO_InitStruct.Pull             = GPIO_NOPULL;
+    HAL_GPIO_Init(SDA_IOGroup, &GPIO_InitStruct);
+}
+
 unsigned short BD_Add_OddEven(unsigned short byte)
 {
     unsigned char i;
@@ -40,7 +71,7 @@ unsigned short BD_Check_OddEven(unsigned short byte)
 // 上位机 接收 下位机 输出，时钟由上位机控制
 void kl_i2c_write(unsigned int write_data)
 {
-
+    SDA_READ2SET();
     write_data = BD_Add_OddEven(write_data);
     for (int i = 10; i >= 0; i--) {
 
@@ -58,13 +89,15 @@ void kl_i2c_write(unsigned int write_data)
 
     while (READ_SCL == HIGH) {
     }
-    SET_SDA = 0;
+    // SET_SDA = 0;
+    SDA_SET2READ();
 }
 
 void kl_i2c_read()
 {
 
     unsigned short READ_DATA = 0;
+    SDA_SET2READ();
 
     for (int i = 0; i <= 10; i++) {
         READ_DATA <<= 1;
@@ -75,8 +108,8 @@ void kl_i2c_read()
 
         if (READ_SDA == HIGH)
             READ_DATA |= 1;
-        //  else
-        //    READ_DATA |= 0;
+        else
+            READ_DATA |= 0;
 
         // 直到scl拉低
 
@@ -96,7 +129,7 @@ void kl_i2c_read()
 //
 // 检测开始帧后面一个bit的sda是高电平还是低电平，高电平为写，低电平为读
 // 检测开始帧后面一个bit的sda是高电平还是低电平，高电平为写，低电平为读
-int kl_i2c_chk_read_write()
+int kl_i2c_chk_read_write(void)
 {
     int read_sda = 0;
     while (READ_SCL == LOW) // 等scl高以后，检测SDA值（高为发送，低为接收）
@@ -120,7 +153,7 @@ int kl_i2c_chk_read_write()
     return read_sda;
 }
 
-void wait_end_frame()
+void wait_end_frame(void)
 {
     while (READ_SDA == HIGH) // 等sda拉低以后再继续
     {
@@ -134,11 +167,11 @@ void wait_end_frame()
     // Serial.println("end_frame");
 }
 
-int mode                         = 0;
-int time_wait                    = 0;
-//bool start_output_calibrate_data = false;
+int mode      = 0;
+int time_wait = 0;
+// bool start_output_calibrate_data = false;
 
-void sw_i2c_start()
+void sw_i2c_start(void)
 {
     if (READ_SDA == HIGH && READ_SCL == HIGH) {
 
@@ -149,9 +182,9 @@ void sw_i2c_start()
         while (READ_SCL == HIGH) // 等scl拉低以后，完成开始帧检测，再继续
         {
         }
-        //mode = 2;
-        // USBSerial.println("start-frame");
-        //time_wait = 0;
+        // mode = 2;
+        //  USBSerial.println("start-frame");
+        // time_wait = 0;
 
         int Read_sda = kl_i2c_chk_read_write();
 
