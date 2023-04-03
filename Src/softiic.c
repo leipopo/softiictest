@@ -90,14 +90,14 @@ void kl_i2c_write(unsigned int write_data)
     while (READ_SCL == HIGH) {
     }
     // SET_SDA = 0;
-    SDA_SET2READ();
+    //SDA_SET2READ();
 }
 
-void kl_i2c_read()
+uint16_t kl_i2c_read()
 {
 
     unsigned short READ_DATA = 0;
-    SDA_SET2READ();
+    //SDA_SET2READ();
 
     for (int i = 0; i <= 10; i++) {
         READ_DATA <<= 1;
@@ -108,8 +108,8 @@ void kl_i2c_read()
 
         if (READ_SDA == HIGH)
             READ_DATA |= 1;
-        else
-            READ_DATA |= 0;
+        //else
+            //READ_DATA |= 0;
 
         // 直到scl拉低
 
@@ -121,8 +121,11 @@ void kl_i2c_read()
     if (BD_Check_OddEven(READ_DATA) == 0) {
         // Serial.println("CRC-ERR");
         // Serial.println(READ_DATA);
+			return 0;
     }
-
+	else {
+	return READ_DATA;
+	}
     // Serial.println(READ_DATA);
 }
 
@@ -170,14 +173,19 @@ void wait_end_frame(void)
 int mode      = 0;
 int time_wait = 0;
 // bool start_output_calibrate_data = false;
-
+uint16_t rd;
 void sw_i2c_start(void)
 {
+	
     if (READ_SDA == HIGH && READ_SCL == HIGH) {
 
         while (READ_SDA == HIGH) // 等sda拉低以后再继续
         {
         }
+				if (READ_SCL == LOW)
+				{
+					return;
+				}
 
         while (READ_SCL == HIGH) // 等scl拉低以后，完成开始帧检测，再继续
         {
@@ -189,7 +197,7 @@ void sw_i2c_start(void)
         int Read_sda = kl_i2c_chk_read_write();
 
         if (Read_sda == 0)
-            kl_i2c_read();
+            rd=kl_i2c_read();
 
         else if (Read_sda == 1) {
 

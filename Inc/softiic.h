@@ -10,25 +10,27 @@
 #define MEM_ADDR(addr)  *((volatile unsigned long  *)(addr)) 
 #define BIT_ADDR(addr, bitnum)   MEM_ADDR(BITBAND(addr, bitnum)) 
 
-#define GPIOA_ODR_Addr    (GPIOA_BASE+12) //0x4001080C 
-#define GPIOB_ODR_Addr    (GPIOB_BASE+12) //0x40010C0C 
-#define GPIOC_ODR_Addr    (GPIOC_BASE+12) //0x4001100C 
-#define GPIOD_ODR_Addr    (GPIOD_BASE+12) //0x4001140C 
-#define GPIOE_ODR_Addr    (GPIOE_BASE+12) //0x4001180C 
-#define GPIOF_ODR_Addr    (GPIOF_BASE+12) //0x40011A0C    
-#define GPIOG_ODR_Addr    (GPIOG_BASE+12) //0x40011E0C    
-#define GPIOH_ODR_Addr    (GPIOH_BASE+12) //0x40011E0C    
-#define GPIOI_ODR_Addr    (GPIOI_BASE+12) //0x40011E0C    
+#define IDRoffset 0x10
+#define ODRoffset 0x14
+#define GPIOA_ODR_Addr    (GPIOA_BASE+ODRoffset) //0x4001080C 
+#define GPIOB_ODR_Addr    (GPIOB_BASE+ODRoffset) //0x40010C0C 
+#define GPIOC_ODR_Addr    (GPIOC_BASE+ODRoffset) //0x4001100C 
+#define GPIOD_ODR_Addr    (GPIOD_BASE+ODRoffset) //0x4001140C 
+#define GPIOE_ODR_Addr    (GPIOE_BASE+ODRoffset) //0x4001180C 
+#define GPIOF_ODR_Addr    (GPIOF_BASE+ODRoffset) //0x40011A0C    
+#define GPIOG_ODR_Addr    (GPIOG_BASE+ODRoffset) //0x40011E0C    
+#define GPIOH_ODR_Addr    (GPIOH_BASE+ODRoffset) //0x40011E0C    
+#define GPIOI_ODR_Addr    (GPIOI_BASE+ODRoffset) //0x40011E0C    
 
-#define GPIOA_IDR_Addr    (GPIOA_BASE+8) //0x40010808 
-#define GPIOB_IDR_Addr    (GPIOB_BASE+8) //0x40010C08 
-#define GPIOC_IDR_Addr    (GPIOC_BASE+8) //0x40011008 
-#define GPIOD_IDR_Addr    (GPIOD_BASE+8) //0x40011408 
-#define GPIOE_IDR_Addr    (GPIOE_BASE+8) //0x40011808 
-#define GPIOF_IDR_Addr    (GPIOF_BASE+8) //0x40011A08 
-#define GPIOG_IDR_Addr    (GPIOG_BASE+8) //0x40011E08 
-#define GPIOH_IDR_Addr    (GPIOH_BASE+8) //0x40011A08 
-#define GPIOI_IDR_Addr    (GPIOI_BASE+8) //0x40011E08 
+#define GPIOA_IDR_Addr    (GPIOA_BASE+IDRoffset) //0x40010808 
+#define GPIOB_IDR_Addr    (GPIOB_BASE+IDRoffset) //0x40010C08 
+#define GPIOC_IDR_Addr    (GPIOC_BASE+IDRoffset) //0x40011008 
+#define GPIOD_IDR_Addr    (GPIOD_BASE+IDRoffset) //0x40011408 
+#define GPIOE_IDR_Addr    (GPIOE_BASE+IDRoffset) //0x40011808 
+#define GPIOF_IDR_Addr    (GPIOF_BASE+IDRoffset) //0x40011A08 
+#define GPIOG_IDR_Addr    (GPIOG_BASE+IDRoffset) //0x40011E08 
+#define GPIOH_IDR_Addr    (GPIOH_BASE+IDRoffset) //0x40011A08 
+#define GPIOI_IDR_Addr    (GPIOI_BASE+IDRoffset) //0x40011E08 
 
 
 
